@@ -97,7 +97,12 @@ except ImportError:
     HAS_RMS = False
 
 W, H = 128, 64
-FPS = 60
+# Частота обновления OLED 0x3D. Слишком высокий FPS может забивать I2C и мешать дисплею 0x3C (oled_display).
+# Можно переопределить: MOUTH_FPS=20 rosrun ainex_bringup robot_mouth_talk.py
+try:
+    FPS = max(5, min(60, int(os.environ.get("MOUTH_FPS", "25"))))
+except Exception:
+    FPS = 25
 MOUTH_SMOOTH = 0.76
 RMS_SCALE = 32.0
 def _resolve_audio_path(filename: str):
