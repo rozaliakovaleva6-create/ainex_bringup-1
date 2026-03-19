@@ -13,5 +13,7 @@
   <node name="robot_mouth_talk_node" pkg="ainex_bringup" type="robot_mouth_talk_node.py" output="screen">
     <param name="output_device" value="$(arg output_device)"/>
     <param name="rate" value="$(arg mouth_sync_hz)"/>
+    <param name="use_oled" value="true"/>
+    <param name="mode" value="idle"/>
   </node>
 </launch>

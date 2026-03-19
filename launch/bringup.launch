@@ -17,8 +17,9 @@
 <launch>
     <arg name="camera_name"     default="camera"/>
     <arg name="image_topic"     default="image_raw"/>
-    <!-- Вывод рта/эмоции ainex на дисплей отключён; при включении сразу выводится эмоция neutral из motik -->
-    <arg name="oled_mouth"     default="false" doc="false = дисплей 0x3D для motik (neutral при старте), true = рот ainex"/>
+    <!-- Автозапуск рта/анимации на OLED 0x3D (robot_mouth_talk_node) -->
+    <!-- motik/emotions_display.launch не запускаем, чтобы не было конфликта за OLED 0x3D -->
+    <arg name="oled_mouth"     default="true" doc="true = рот ainex на дисплее 0x3D, motik neutral отключён"/>
 
     <!--摄像头节点-->
     <include file="$(find ainex_peripherals)/launch/usb_cam_with_calib.launch">
@@ -31,10 +32,7 @@
         <arg name="oled_mouth" value="$(arg oled_mouth)"/>
     </include>
 
-    <!-- При включении сразу выводим эмоцию neutral на дисплей 0x3D (без ручного запуска) -->
-    <include file="$(find motik)/launch/emotions_display.launch">
-        <arg name="default_emotion" value="neutral"/>
-    </include>
+    <!-- motik/emotions_display.launch не запускаем (OLED 0x3D занят robot_mouth_talk_node) -->
 
     <!--手柄控制节点-->
     <include file="$(find ainex_peripherals)/launch/joystick_control.launch"/>
